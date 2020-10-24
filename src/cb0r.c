@@ -370,18 +370,10 @@ uint32_t cb0r_vlen(cb0r_t data)
 #define be64toh(x) OSSwapBigToHostInt64(x)
 #define le64toh(x) OSSwapLittleToHostInt64(x)
 #elif __AVR__
-#define htobe16(x) __uint16_identity (x)
-#define htole16(x) __bswap_16 (x)
-#define be16toh(x) __uint16_identity (x)
-#define le16toh(x) __bswap_16 (x)
-#define htobe32(x) __uint32_identity (x)
-#define htole32(x) __bswap_32 (x)
-#define be32toh(x) __uint32_identity (x)
-#define le32toh(x) __bswap_32 (x)
-#define htobe64(x) __uint64_identity (x)
-#define htole64(x) __bswap_64 (x)
-#define be64toh(x) __uint64_identity (x)
-#define le64toh(x) __bswap_64 (x)
+#define htobe16(x) ((x >> 8) | (x << 8))
+#define htobe32(x) ((x >> 24) | (x >> 16) | (x >> 8) | (x << 24))
+#define htobe64(x) ((x >> 56) | (x >> 48) | (x >> 40) | (x >> 32) | \
+            (x >> 24) | (x >> 16) | (x >> 8) | (x << 56)) 
 #else
 #include <endian.h>
 #endif /* __APPLE__ */
